@@ -26,7 +26,8 @@ public:
 
 	static int highEle;
 	void run();
-	static vector<int> turn;
+	//static vector<int> turn;
+	int turn;
 private:
 	int id;
 	Carro *carro;
