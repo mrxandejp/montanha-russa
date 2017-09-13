@@ -4,7 +4,6 @@
  *  Created on: 17 de abr de 2017
  *      Author: bruno
  */
- // teste
 #include "include/Carro.h"
 #include "include/Parque.h"
 #include <iostream>
