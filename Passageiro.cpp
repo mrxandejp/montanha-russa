@@ -50,7 +50,7 @@ void Passageiro::entraNoCarro() {
 	        if (turn[max] > highEle)
 	            highEle = turn[max];
 	    }
-
+	    cerr << "highEle: " << highEle << endl;
 		turn[id] = highEle + 1;
 		cerr << "turn[" << id << "] = " << turn[id] << endl;
 		lock[id] = 0;
