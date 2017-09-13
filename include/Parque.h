@@ -9,6 +9,7 @@
 #define PARQUE_H_
 
 #include <vector>
+#include <atomic>
 using namespace std;
 
 class Passageiro;
@@ -17,7 +18,7 @@ using namespace std;
 
 class Parque {
 public:
-	static int numPessoas;
+	static std::atomic<int> numPessoas;
 
 	Parque();
 	virtual ~Parque();

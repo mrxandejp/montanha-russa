@@ -17,15 +17,16 @@
 using namespace std;
 
 
-#define MAX_NUM_VOLTAS 1
+#define MAX_NUM_VOLTAS 5
 
 int Passageiro::highEle = 0;
 
 vector<int> Passageiro::turn(Carro::CAPACIDADE);	
 
-Passageiro::Passageiro(int id, Carro *c) {
+Passageiro::Passageiro(int id, Carro *c, Parque *p) {
 	this->id = id;
 	this->carro = c;
+	this->parque = p;
 }
 
 Passageiro::~Passageiro() {
@@ -38,14 +39,12 @@ void Passageiro::entraNoCarro() {
 
 	int /*n = Carro::CAPACIDADE,*/i=0, j;
 	int lock[Parque::numPessoas];
-
-	while (Carro::numPassageiros < Carro::CAPACIDADE) {
+	//while (Carro::numPassageiros < Carro::CAPACIDADE) {
 
 		lock[id] = 1;
-		//cerr << "lock!! TRUE " << Carro::numPassageiros << endl;
-		//int highEle = 0;
 		int max;
-		for (max = 0 ; max < Carro::CAPACIDADE ; max++);
+		int teste = parque->getPassageiros();
+		for (max = 0 ; max < teste ; max++);
 	    {
 	        if (turn[max] > highEle)
 	            highEle = turn[max];
@@ -55,20 +54,20 @@ void Passageiro::entraNoCarro() {
 		cerr << "turn[" << id << "] = " << turn[id] << endl;
 		lock[id] = 0;
 		
-		for (int j = 0; j < Carro::CAPACIDADE ; j++)
+		for (int j = 0; j < teste ; j++)
 		{
-			//if(j != i) {
-
-			while(lock[j]){}
-			//cerr << "lock!! PASSEI" << Carro::numPassageiros << endl;
-			while (turn[j] != 0 && (turn[j] < turn[id] || turn[id] == turn[j] && j < id)){}
+			if(j != id) {
+				while(lock[j]){}
+				//cerr << "lock!! PASSEI" << Carro::numPassageiros << endl;
+				while (turn[j] != 0 && (turn[j] < turn[id] || turn[id] == turn[j] && j < id)){}
+			}
 		}
 
 
 		Carro::numPassageiros.fetch_add(1, std::memory_order_seq_cst);
 		cerr << id << " entrando no carro" << endl;	
 
-	}
+	//}
 	cerr << "pulei para ca!! " << Carro::numPassageiros << endl;
 
 }

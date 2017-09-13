@@ -16,7 +16,7 @@ class Parque;
 
 class Passageiro {
 public:
-	Passageiro(int id, Carro *c);
+	Passageiro(int id, Carro *c, Parque *p);
 	virtual ~Passageiro();
 	void entraNoCarro();
 	void esperaVoltaAcabar();
@@ -30,6 +30,7 @@ public:
 private:
 	int id;
 	Carro *carro;
+	Parque *parque;
 };
 
 #endif /* PASSAGEIRO_H_ */

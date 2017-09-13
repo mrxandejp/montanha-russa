@@ -9,7 +9,7 @@
 #include "include/Passageiro.h"
 using namespace std;
 
-int Parque::numPessoas = 10;
+std::atomic<int> Parque::numPessoas = ATOMIC_VAR_INIT(10);
 
 Parque::Parque() {
 }
