@@ -94,14 +94,14 @@ bool Passageiro::parqueFechado() {
 void Passageiro::run() {
 	while (!parqueFechado()) {
 		entraNoCarro(); // protocolo de entrada
-		cerr << "eh nois" << endl;
+		//cerr << "eh nois" << endl;
 		esperaVoltaAcabar();
 
 		saiDoCarro(); // protocolo de saida
 
 		passeiaPeloParque(); // secao nao critica
 	}
-	Parque::numPessoas--;
+	Parque::numPessoas.fetch_sub(1, std::memory_order_seq_cst);
 	// decrementa o numero de pessoas no parque
 }
 

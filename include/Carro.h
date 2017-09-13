@@ -19,7 +19,7 @@ public:
 	static atomic<int> numPassageiros;
 	static bool voltaAcabou;
 
-	Carro();
+	Carro(Parque *);
 	virtual ~Carro();
 	void esperaEncher();
 	void daUmaVolta();
@@ -35,7 +35,7 @@ public:
 
 private:
 	int voltas;
-
+	Parque *parque;
 
 };
 
