@@ -17,8 +17,9 @@ atomic<int> Carro::numPassageiros = ATOMIC_VAR_INIT(0);
 bool Carro::voltaAcabou = false;
 
 
-Carro::Carro() {
+Carro::Carro(Parque *p) {
 	this->voltas = 0;
+	this->parque = p;
 }
 
 Carro::~Carro() {
@@ -27,15 +28,14 @@ Carro::~Carro() {
 
 void Carro::esperaEncher() {
 
-	while (Carro::numPassageiros < Carro::CAPACIDADE) {
+	while (Carro::numPassageiros < Carro::CAPACIDADE && Carro::voltas < 5) {
 		//cerr << "Esperando encher" << endl;
 	}
 }
 
 void Carro::daUmaVolta() {
-
+	Carro::voltaAcabou = false;
 	usleep(1000);
-	// Dorme por um tempo fixo
 	cerr << "Dando uma volta" << endl;
 	Carro::voltaAcabou = true;
 }
@@ -50,7 +50,7 @@ void Carro::esperaEsvaziar() {
 
 int Carro::getNVoltas() {
 
-	cerr << "Pegando a volta" << endl;
+	//cerr << "Pegando a volta" << endl;
 	return voltas;
 }
 
@@ -58,14 +58,14 @@ int Carro::getNVoltas() {
 void Carro::run() {
 
 	while (Parque::numPessoas > 0) {
-		cerr << "opa" <<endl;
+		//cerr << "opa" <<endl;
 		esperaEncher();
 
 		daUmaVolta();
 
 		esperaEsvaziar();
 
-		cerr << "Run do carro" << endl;
+		//cerr << "Run do carro" << endl;
 		voltas++;
 	}
 }

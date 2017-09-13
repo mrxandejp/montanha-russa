@@ -9,7 +9,7 @@ using namespace std;
 
 int main() {
 	Parque parque;
-	Carro carro;
+	Carro carro(&parque);
 	Passageiro *passageiros[10];
 
     for (int i = 0; i < 10; i++) {
