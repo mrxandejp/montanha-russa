@@ -13,6 +13,8 @@ using namespace std;
 
 const int Carro::CAPACIDADE = 5;
 atomic<int> Carro::numPassageiros = ATOMIC_VAR_INIT(0);
+std::atomic_flag Carro::lock = ATOMIC_FLAG_INIT;
+
 bool Carro::voltaAcabou = false;
 
 
@@ -41,30 +43,33 @@ void Carro::daUmaVolta() {
 
 void Carro::esperaEsvaziar() {
 
-	while (Carro::numPassageiros > 0) {
-		cerr << "Espera esvaziar" << endl;
-		usleep(1000); 
+	while (Carro::numPassageiros > 0 && Parque::numPessoas.load(std::memory_order_relaxed) > 0) {
+		//cerr << "Espera esvaziar" << endl;
+		//usleep(1000); 
 	}
 }
 
 int Carro::getNVoltas() {
 
 	//cerr << "Pegando a volta" << endl;
-	return voltas;
+	return Carro::voltas;
 }
 
 
 void Carro::run() {
 
-	while (Parque::numPessoas > 0) {
+	while (Parque::numPessoas.load(std::memory_order_relaxed) > 0) {
 		//cerr << "opa" <<endl;
 		esperaEncher();
-
+		while (Carro::lock.test_and_set()) {/*SKIP*/}
+		Carro::lock.clear();
 		daUmaVolta();
-
+		while (Carro::lock.test_and_set()) {}
+		Carro::lock.clear();
 		esperaEsvaziar();
-
+		Carro::voltaAcabou = false;
 		//cerr << "Run do carro" << endl;
-		voltas++;
+		Carro::voltas++;
 	}
+		cerr << getNVoltas() << endl;
 }
