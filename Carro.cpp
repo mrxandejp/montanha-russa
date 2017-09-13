@@ -42,9 +42,9 @@ void Carro::daUmaVolta() {
 
 void Carro::esperaEsvaziar() {
 
-	while (Carro::numPassageiros > 0) {
-		cerr << "Espera esvaziar" << endl;
-		usleep(1000); 
+	while (Carro::numPassageiros > 0 && Parque::numPessoas.load(std::memory_order_relaxed) > 0) {
+		//cerr << "Espera esvaziar" << endl;
+		//usleep(1000); 
 	}
 }
 
@@ -57,7 +57,7 @@ int Carro::getNVoltas() {
 
 void Carro::run() {
 
-	while (Parque::numPessoas > 0) {
+	while (Parque::numPessoas.load(std::memory_order_relaxed) > 0) {
 		//cerr << "opa" <<endl;
 		esperaEncher();
 

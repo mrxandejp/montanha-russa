@@ -19,8 +19,6 @@ using namespace std;
 
 #define MAX_NUM_VOLTAS 5
 
-int Passageiro::highEle = 0;
-
 //vector<int> Passageiro::turn(Carro::CAPACIDADE);	
 
 Passageiro::Passageiro(int id, Carro *c, Parque *p) {
@@ -36,8 +34,6 @@ void Passageiro::entraNoCarro() {
 	// Protocolo de entrada do Algoritmo da Padaria
 	// Incrementa o numero de passageiros no carro (use a funcao fetch_add) 
 	// passo 1
-
-	int lock[Parque::numPessoas];
 
 	int max=0;
 	for (auto &tred : parque->getPassageiros())
@@ -58,8 +54,6 @@ void Passageiro::entraNoCarro() {
 
 	Carro::numPassageiros.fetch_add(1, std::memory_order_seq_cst);
 	cerr << id << " entrando no carro" << endl;	
-
-	//cerr << "pulei para ca!! " << Carro::numPassageiros << endl;
 	turn = 0;
 
 }
@@ -67,7 +61,7 @@ void Passageiro::entraNoCarro() {
 void Passageiro::esperaVoltaAcabar() {
 	 while (!Carro::voltaAcabou) {
 		//cerr << "Esperando volta acabar" << endl;
-		usleep(1000);
+		//usleep(1000);
 	 }
 }
 

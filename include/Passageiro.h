@@ -24,7 +24,6 @@ public:
 	void passeiaPeloParque();
 	bool parqueFechado();
 
-	static int highEle;
 	void run();
 	//static vector<int> turn;
 	int turn;
