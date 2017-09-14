@@ -62,7 +62,7 @@ void Carro::run() {
 	while (Parque::numPessoas.load(std::memory_order_relaxed) > 0) {
 		//cerr << "opa" <<endl;
 		esperaEncher();
-		while (Carro::lock.test_and_set()) {/*SKIP*/}
+		while (Carro::lock.test_and_set()) {}
 		Carro::lock.clear();
 		daUmaVolta();
 		while (Carro::lock.test_and_set()) {}
