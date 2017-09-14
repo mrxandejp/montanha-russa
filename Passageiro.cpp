@@ -54,8 +54,8 @@ void Passageiro::entraNoCarro() {
 
 	Carro::numPassageiros.fetch_add(1, std::memory_order_seq_cst);
 	cerr << id << " entrando no carro" << endl;	
-	turn = 0;
-
+	
+	this->turn = 0;
 }
 
 void Passageiro::esperaVoltaAcabar() {
